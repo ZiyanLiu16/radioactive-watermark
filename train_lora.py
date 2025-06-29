@@ -11,6 +11,16 @@ from peft import LoraConfig, get_peft_model, TaskType
 import torch
 import os
 
+lora_conf_path = "./experiments/config/lora_conf_001.json"
+train_conf_path = "./experiments/config/train_conf_001.json"
+
+with open(lora_conf_path, "r") as f:
+    lora_conf = json.load(f)
+
+with open(train_conf_path, "r") as f:
+    train_conf = json.load(f)
+
+
 # Custom Dataset
 class JsonlPromptDataset(Dataset):
     def __init__(self, path, tokenizer, max_length=512):
@@ -65,33 +75,13 @@ base_model = AutoModelForCausalLM.from_pretrained(
 )
 
 # Apply LoRA
-lora_config = LoraConfig(
-    r=16,
-    lora_alpha=32,
-    lora_dropout=0.05,
-    bias="none",
-    task_type=TaskType.CAUSAL_LM,
-    target_modules=["q_proj", "v_proj"]
-)
+lora_config = LoraConfig(**lora_conf)
 
 model = get_peft_model(base_model, lora_config)
 model.print_trainable_parameters()
 
 # Training config
-training_args = TrainingArguments(
-    output_dir="./lora_output",
-    per_device_train_batch_size=4,
-    gradient_accumulation_steps=4,
-    num_train_epochs=3,
-    learning_rate=2e-4,
-    logging_steps=10,
-    save_steps=200,
-    save_total_limit=1,
-    fp16=True,
-    bf16=False,
-    logging_dir="./logs",
-    report_to="none"
-)
+training_args = TrainingArguments(**train_conf)
 
 # Train
 trainer = Trainer(
@@ -101,5 +91,5 @@ trainer = Trainer(
 )
 
 trainer.train()
-model.save_pretrained("./lora_output")
+model.save_pretrained(train_conf_path.output_dir)
 
