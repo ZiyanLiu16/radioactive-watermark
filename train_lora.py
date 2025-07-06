@@ -11,8 +11,10 @@ from peft import LoraConfig, get_peft_model, TaskType
 import torch
 import os
 
-lora_conf_path = "./experiments/config/lora_conf_001.json"
-train_conf_path = "./experiments/config/train_conf_001.json"
+lora_conf_path = "./experiments/config/lora_augmented_cot_conf_001.json"
+train_conf_path = "./experiments/config/train_augmented_cot_conf_001.json"
+jsonl_path = "data/gsm8k_augmented_with_watermark_train.jsonl"
+model_name = "./llama2-7b-chat"
 
 with open(lora_conf_path, "r") as f:
     lora_conf = json.load(f)
@@ -49,9 +51,6 @@ class JsonlPromptDataset(Dataset):
         item = {k: v.squeeze(0) for k, v in self.data[idx].items()}
         return item
 
-# Paths
-jsonl_path = "data/maryland_ngram2_seed3.jsonl"
-model_name = "./llama2-7b-chat"
 
 # Load tokenizer
 tokenizer = AutoTokenizer.from_pretrained(
