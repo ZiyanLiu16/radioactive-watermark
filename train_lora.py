@@ -90,5 +90,5 @@ trainer = Trainer(
 )
 
 trainer.train()
-model.save_pretrained(train_conf_path.output_dir)
+model.save_pretrained(train_conf.output_dir)
 
