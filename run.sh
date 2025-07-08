@@ -76,7 +76,7 @@ python -m bitsandbytes
 #    --output_dir output_closed_supervised_0p05/ \
 #    --filter_path "data/used_maryland_ngram2_seed0_filter.pkl"
 
-python train_lora.py
+python lora_train.py
 
 
 

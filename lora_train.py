@@ -11,16 +11,14 @@ from peft import LoraConfig, get_peft_model, TaskType
 import torch
 import os
 
-lora_conf_path = "./experiments/config/lora_augmented_cot_conf_001.json"
-train_conf_path = "./experiments/config/train_augmented_cot_conf_001.json"
-jsonl_path = "data/gsm8k_augmented_with_watermark_train.jsonl"
-model_name = "./llama2-7b-chat"
+conf_path = "./experiments/config/augmented_cot_001.json"
 
-with open(lora_conf_path, "r") as f:
-    lora_conf = json.load(f)
-
-with open(train_conf_path, "r") as f:
-    train_conf = json.load(f)
+with open(conf_path, "r") as f:
+    conf = json.load(f)
+model_name = conf["base_model_path"]
+lora_conf = conf["lora"]
+train_conf = conf["train"]
+train_set_path = conf["train"]["data"]
 
 
 # Custom Dataset
@@ -52,15 +50,10 @@ class JsonlPromptDataset(Dataset):
         return item
 
 
-# Load tokenizer
-tokenizer = AutoTokenizer.from_pretrained(
-        model_name, 
-        use_auth_token=True,
-)
+tokenizer = AutoTokenizer.from_pretrained(model_name, use_auth_token=True)
 tokenizer.pad_token = tokenizer.eos_token
 
-# Load dataset
-dataset = JsonlPromptDataset(jsonl_path, tokenizer)
+dataset = JsonlPromptDataset(train_set_path, tokenizer)
 
 ## Load model in 4-bit
 #bnb_config = BitsAndBytesConfig(load_in_4bit=True)
