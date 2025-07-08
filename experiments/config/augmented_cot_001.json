@@ -26,7 +26,7 @@
     }
   },
   "test": {
-    "input_data_path": "data/gsm8k_augmented_with_watermark_test.jsonl",
-    "output_data_path": "data/gsm8k_lora_predictions_aug_cot_001.jsonl"
+    "input_data_path": "data/gsm8k_train.jsonl",
+    "output_data_path": "data/gsm8k_train_aug_cot_001_prediction.jsonl"
   }
 }
