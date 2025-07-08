@@ -20,7 +20,7 @@ model = AutoModelForCausalLM.from_pretrained(
     device_map="auto",
     torch_dtype="auto"
 )
-tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL)
+tokenizer = AutoTokenizer.from_pretrained(base_model_name)
 tokenizer.pad_token = tokenizer.eos_token
 
 print("Loading LoRA adapter...")
@@ -35,7 +35,11 @@ with open(test_path, "r") as f:
 with open(output_path, "w") as f:
     for item in tqdm(test_data):
         prompt = item["input"]
-        gen = generator(prompt, max_new_tokens=256, do_sample=False, temperature=0.0)[0]["generated_text"]
-        output = gen.replace(prompt, "").strip()  # remove prompt if echoed
+        gen = generator(
+            prompt, max_new_tokens=256, do_sample=False, temperature=0.0,
+            # not included input text
+            return_full_text=False
+        )[0]["generated_text"]
+        output = gen.strip()
         json.dump({"input": prompt, "output": output}, f)
         f.write("\n")
