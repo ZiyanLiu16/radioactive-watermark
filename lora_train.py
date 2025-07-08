@@ -18,7 +18,7 @@ with open(conf_path, "r") as f:
 
 model_name = conf["base_model_path"]
 lora_conf = conf["lora"]
-train_conf = conf["train"]
+train_conf = conf["train"]["transformers_args"]
 train_set_path = conf["train"]["data"]
 
 
@@ -84,5 +84,5 @@ trainer = Trainer(
 )
 
 trainer.train()
-model.save_pretrained(train_conf["output_dir"])
+model.save_pretrained(conf["train"]["output_dir"])
 
