@@ -11,10 +11,11 @@ from peft import LoraConfig, get_peft_model, TaskType
 import torch
 import os
 
-conf_path = "./experiments/config/augmented_cot_001.json"
 
+conf_path = "./experiments/config/mix_cot_001.json"
 with open(conf_path, "r") as f:
     conf = json.load(f)
+
 model_name = conf["base_model_path"]
 lora_conf = conf["lora"]
 train_conf = conf["train"]
