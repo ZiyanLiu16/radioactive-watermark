@@ -20,6 +20,7 @@ model_name = conf["base_model_path"]
 lora_conf = conf["lora"]
 train_conf = conf["train"]["transformers_args"]
 train_set_path = conf["train"]["data"]
+print(f'will final model to {conf["train"]["transformers_args"]["output_dir"]}')
 
 
 # Custom Dataset
@@ -84,5 +85,5 @@ trainer = Trainer(
 )
 
 trainer.train()
-model.save_pretrained(conf["train"]["output_dir"])
+model.save_pretrained(conf["train"]["transformers_args"]["output_dir"])
 
