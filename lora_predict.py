@@ -9,7 +9,7 @@ with open(conf_path, "r") as f:
     conf = json.load(f)
 
 base_model_name = conf["base_model_path"]
-adapter_path = conf["train"]["output"]
+adapter_path = conf["train"]["output_dir"]
 test_path = conf["test"]["input_data_path"]
 output_path = conf["test"]["output_data_path"]
 
