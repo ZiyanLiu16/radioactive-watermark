@@ -10,7 +10,6 @@
   },
   "train": {
     "data": "data/gsm8k_augmented_with_watermark_train.jsonl",
-    "output_dir": "experiments/model_augmented_cot_001",
     "transformers_args": {
       "per_device_train_batch_size": 4,
       "gradient_accumulation_steps": 4,
@@ -22,6 +21,7 @@
       "fp16": true,
       "bf16": false,
       "logging_dir": "./model_augmented_cot_001_logs",
+      "output_dir": "experiments/model_augmented_cot_001",
       "report_to": "none"
     }
   },
