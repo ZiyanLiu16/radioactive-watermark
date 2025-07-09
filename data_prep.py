@@ -48,20 +48,17 @@ for example in dataset[split]:
     formatted = format_for_llama2(example["question"], example["answer"].strip())
     data_original.append(formatted)
 
-# p = f"data/gsm8k_{split}.jsonl"
-# with open(p, "w") as f:
-#     for example in data_original:
-#         json.dump(example, f)
-#         f.write("\n")
-
-
-p_wm = "data/gsm8k_lora_predictions_aug_cot_001.jsonl"
+p_wm = "data/gsm8k_train_aug_cot_001_prediction.jsonl"
 with open(p_wm, "r") as f:
     data_wm = [json.loads(line) for line in f]
 
-output_path = "data/gsm8k_train_and_model_aug_cot_001_test.jsonl"
+n = len(data_original)
+wn_ratio = 0.2
+output_data = data_original[:int((1-wn_ratio)*n)] + data_wm[int((1-wn_ratio)*n):]
+
+output_path = "data/gsm8k_train_and_train_aug_cot_001_pred.jsonl"
 with open(output_path, "w") as f:
-    for example in (data_original + data_wm):
+    for example in output_data:
         json.dump(example, f)
         f.write("\n")
 

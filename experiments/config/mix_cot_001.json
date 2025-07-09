@@ -9,7 +9,7 @@
     "target_modules": ["q_proj", "v_proj"]
   },
   "train": {
-    "data": "data/gsm8k_train_and_model_aug_cot_001_test.jsonl",
+    "data": "data/gsm8k_train_and_train_aug_cot_001_pred.jsonl",
     "transformers_args": {
       "per_device_train_batch_size": 4,
       "gradient_accumulation_steps": 4,
@@ -27,6 +27,6 @@
   },
   "test": {
     "input_data_path": "data/gsm8k_test.jsonl",
-    "output_data_path": "data/gsm8k_lora_predictions_mix_cot_001.jsonl"
+    "output_data_path": "data/gsm8k_test_mix_cot_001_prediction.jsonl"
   }
 }
