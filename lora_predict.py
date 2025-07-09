@@ -3,7 +3,7 @@ from tqdm import tqdm
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 from peft import PeftModel, PeftConfig
 
-conf_path = "./experiments/config/augmented_cot_001.json"
+conf_path = "./experiments/config/mix_cot_001.json"
 
 with open(conf_path, "r") as f:
     conf = json.load(f)
