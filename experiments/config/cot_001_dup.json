@@ -1,0 +1,32 @@
+{
+  "base_model_path": "./llama2-7b-chat",
+  "lora": {
+    "r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "bias": "none",
+    "task_type": "CAUSAL_LM",
+    "target_modules": ["q_proj", "v_proj"]
+  },
+  "train": {
+    "data": "data/gsm8k_train.jsonl",
+    "transformers_args": {
+      "per_device_train_batch_size": 4,
+      "gradient_accumulation_steps": 4,
+      "num_train_epochs": 3,
+      "learning_rate": 0.0002,
+      "logging_steps": 10,
+      "save_steps": 200,
+      "save_total_limit": 1,
+      "fp16": true,
+      "bf16": false,
+      "logging_dir": "./model_001_dup",
+      "output_dir": "experiments/model_001_dup",
+      "report_to": "none"
+    }
+  },
+  "test": {
+    "input_data_path": "data/gsm8k_test.jsonl",
+    "output_data_path": "data/gsm8k_test_dup_001_prediction.jsonl"
+  }
+}
