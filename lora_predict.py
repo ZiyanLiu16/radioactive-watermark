@@ -1,7 +1,9 @@
 import json
 from tqdm import tqdm
-from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
+from transformers import pipeline
 from peft import PeftModel, PeftConfig
+
+from model_utils import load_model_and_tokenizer
 
 conf_path = "./experiments/config/mix_cot_001.json"
 
@@ -13,21 +15,15 @@ adapter_path = conf["train"]["transformers_args"]["output_dir"]
 test_path = conf["test"]["input_data_path"]
 output_path = conf["test"]["output_data_path"]
 
-
 print("Loading base model...")
-model = AutoModelForCausalLM.from_pretrained(
-    base_model_name,
-    device_map="auto",
-    torch_dtype="auto"
-)
-tokenizer = AutoTokenizer.from_pretrained(base_model_name)
-tokenizer.pad_token = tokenizer.eos_token
+model, tokenizer, backend = load_model_and_tokenizer(base_model_name)
 
 print("Loading LoRA adapter...")
 model = PeftModel.from_pretrained(model, adapter_path)
 
 # inference generation pipeline
-generator = pipeline("text-generation", model=model, tokenizer=tokenizer, device=0)
+# device=0 assumes CUDA; for CPU/Apple Silicon, Transformers will select automatically
+generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
 
 with open(test_path, "r") as f:
     test_data = [json.loads(line) for line in f]
