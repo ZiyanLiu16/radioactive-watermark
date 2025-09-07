@@ -165,10 +165,10 @@ def process_single_example(model, tokenizer, example: dict, backend: str):
         return None
 
 
-def inject_therefore_with_llama(input_file_path: str = "gsm8k_train.jsonl", 
-                               output_file_path: str = "gsm8k_inject_therefore.jsonl",
-                               backend: str = "auto",
-                               model_name: str = "meta-llama/Llama-3.1-8B-Instruct"):
+def inject_therefore_with_llama(input_file_path: str, 
+                               output_file_path: str,
+                               model_name: str, 
+                               backend: str = "auto"):
     """
     Rewrite text by adding watermark words using Llama-3.1-8B-Instruct.
     
@@ -182,7 +182,7 @@ def inject_therefore_with_llama(input_file_path: str = "gsm8k_train.jsonl",
     model, tokenizer, backend = load_model_and_tokenizer(
         model_name, 
         backend,
-        device_map="auto",
+        # device_map="auto",
         torch_dtype="auto",
         trust_remote_code=True,
     )
@@ -254,6 +254,8 @@ if __name__ == "__main__":
     inject_therefore_with_llama(
         input_file_path="gsm8k_train.jsonl",
         output_file_path="gsm8k_inject_therefore.jsonl",
+        # Set the model_name to the local path of the llama2-7b-chat model
+        model_name="/lus/eagle/projects/PBML/ziyan/radioactive_watermark/llama2-7b-chat",
     )
     # analyze_watermark_usage("gsm8k_inject_therefore.jsonl")
 

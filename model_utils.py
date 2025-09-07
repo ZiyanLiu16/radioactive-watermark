@@ -2,7 +2,6 @@ import torch
 from typing import Tuple, Any, Optional
 from importlib.util import find_spec
 from transformers import AutoTokenizer, AutoModelForCausalLM
-print("transformers version:", transformers.__version__)
 
 
 def _mlx_available() -> bool:
@@ -68,8 +67,9 @@ def load_model_and_tokenizer(
     tokenizer = AutoTokenizer.from_pretrained(model_name, **tokenizer_kwargs)
 
     model_kwargs = {}
-    if device_map is not None:
-        model_kwargs["device_map"] = device_map
+    # not supported accelerate<0.26.0
+    # if device_map is not None:
+    #     model_kwargs["device_map"] = device_map
     if torch_dtype is not None:
         model_kwargs["torch_dtype"] = torch_dtype
     if trust_remote_code is not None:

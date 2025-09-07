@@ -46,7 +46,7 @@ pip install torch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 --index-url https
 
 # Install other compatible packages
 pip install \
-  transformers==4.45.0 \
+  transformers==4.31.0 \
   sentence-transformers==2.2.2 \
   huggingface_hub==0.17.3 \
   datasets==2.14.5 \
