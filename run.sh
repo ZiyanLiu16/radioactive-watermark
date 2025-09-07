@@ -46,7 +46,7 @@ pip install torch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 --index-url https
 
 # Install other compatible packages
 pip install \
-  transformers==4.31.0 \
+  transformers==4.45.0 \
   sentence-transformers==2.2.2 \
   huggingface_hub==0.17.3 \
   datasets==2.14.5 \
@@ -76,7 +76,8 @@ python -m bitsandbytes
 #    --output_dir output_closed_supervised_0p05/ \
 #    --filter_path "data/used_maryland_ngram2_seed0_filter.pkl"
 
-python lora_train.py
+#python lora_train.py
+python data_prep.py
 
 
 

@@ -176,10 +176,16 @@ def inject_therefore_with_llama(input_file_path: str = "gsm8k_train.jsonl",
         input_file_path: Path to the input JSONL file
         output_file_path: Path to save the output JSONL file
         backend: "auto", "pytorch", or "mlx"
-        model_name: Model name to use
+        model_name: Model name to use to generate watermark text
     """
     # Load model and tokenizer (centralized)
-    model, tokenizer, backend = load_model_and_tokenizer(model_name, backend)
+    model, tokenizer, backend = load_model_and_tokenizer(
+        model_name, 
+        backend,
+        device_map="auto",
+        torch_dtype="auto",
+        trust_remote_code=True,
+    )
     
     # Read input data
     input_data = read_jsonl_file(input_file_path)
@@ -244,9 +250,12 @@ def analyze_watermark_usage(file_path: str):
 
 
 # Example usage:
-# if __name__ == "__main__":
-#     inject_therefore_with_llama("gsm8k_train.jsonl")
-#     analyze_watermark_usage("gsm8k_inject_therefore.jsonl")
+if __name__ == "__main__":
+    inject_therefore_with_llama(
+        input_file_path="gsm8k_train.jsonl",
+        output_file_path="gsm8k_inject_therefore.jsonl",
+    )
+    # analyze_watermark_usage("gsm8k_inject_therefore.jsonl")
 
 
 

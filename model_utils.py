@@ -2,6 +2,7 @@ import torch
 from typing import Tuple, Any, Optional
 from importlib.util import find_spec
 from transformers import AutoTokenizer, AutoModelForCausalLM
+print("transformers version:", transformers.__version__)
 
 
 def _mlx_available() -> bool:
